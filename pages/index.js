@@ -10,10 +10,10 @@ export default function Home() {
       </header>
       <main className={styles.main}>
         <div style={{ display: 'inline-block', width: '200px' }}></div>
-        <Configuration />
-        <Configuration />
-        <Configuration />
-        <Configuration />
+        <Configuration id="one" />
+        <Configuration id="two" />
+        <Configuration id="three" />
+        <Configuration id="four" />
         <div id="labels">
           <div className="even">Travel time</div>
           <div className="odd">Wasted time</div>
