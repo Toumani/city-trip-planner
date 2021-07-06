@@ -1,0 +1,27 @@
+.root {
+	display: inline-block;
+	width: 300px;
+	margin: 0 20px;
+	padding-bottom: 20px;
+	box-shadow: 0 0 30px #ccc;
+	border-radius: 20px;
+}
+
+.configuration {
+	height: 350px;
+	padding: 1px 10px;
+}
+
+.select {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	padding: 10px 0;
+}
+
+.feature {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 60px;
+}

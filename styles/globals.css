@@ -14,3 +14,21 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.odd {
+	background-color: #cfc;
+}
+
+.even {
+	background-color: azure;
+}
+
+#labels {
+  position: relative;
+  top: -380px;
+  z-index: -1;
+}
+
+#labels > div {
+  height: 60px;
+}
