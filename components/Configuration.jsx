@@ -2,6 +2,8 @@ import React from "react";
 
 import styles from './Configuration.module.css';
 
+import { AiFillStar } from 'react-icons/ai';
+
 export default class Configuration extends React.Component {
   constructor(props) {
     super(props);
@@ -72,6 +74,7 @@ export default class Configuration extends React.Component {
             break;
         }
         comfort /= 3;
+        comfort = Math.round(comfort);
         this.setState({ travelTime, wastedTime: 30, cost: 580, energy: 60, comfort, security: 5})
         break;
       case 'cycle':
@@ -152,6 +155,7 @@ export default class Configuration extends React.Component {
             break;
         }
         comfort /= 2;
+        comfort = Math.round(comfort);
         cost *= 22; // 22 working days in a month
         this.setState({ travelTime, wastedTime: travelTime, cost, energy, comfort, security: 4 });
     }
@@ -195,50 +199,50 @@ export default class Configuration extends React.Component {
         <section className={styles.configuration}>
           <h4>Configuration</h4>
           <div>
-            <label for="train-radio">Train</label>
+            <label htmlFor="train-radio">Train</label>
             <input id="train-radio" type="radio" name={`${id}-mean`} value="train"
               onChange={() => { this.updateMean('train'); }}
             />
-            <label for="cycle-radio">Cycle</label>
+            <label htmlFor="cycle-radio">Cycle</label>
             <input id="cycle-radio" type="radio" name={`${id}-mean`} value="cycle"
               onChange={() => { this.updateMean('cycle'); }}
             />
-            <label for="car-radio">Car</label>
+            <label htmlFor="car-radio">Car</label>
             <input id="car-radio" type="radio" name={`${id}-mean`} value="car"
               onChange={() => { this.updateMean('car'); } }
             />
           </div>
           <div className={styles.select}>
-            <label>Departune from home</label>
-            <select onChange={(e) => { this.updateDepartuneHome(e.target.value) }}>
+            <label className={styles.label}>Departune from home</label>
+            <select className={styles['select-css']} onChange={(e) => { this.updateDepartuneHome(e.target.value) }}>
               <option value="before">Before rush hour</option>
               <option value="during">During rush hour</option>
               <option value="after">After rush hour</option>
             </select>
           </div>
           <div className={styles.select}>
-            <label>Departune from work</label>
-            <select onChange={(e) => { this.updateDepartuneWork(e.target.value) }}>
+            <label className={styles.label}>Departune from work</label>
+            <select className={styles['select-css']} onChange={(e) => { this.updateDepartuneWork(e.target.value) }}>
               <option value="before">Before rush hour</option>
               <option value="during">During rush hour</option>
               <option value="after">After rush hour</option>
             </select>
           </div>
           <div>
-            <h5>Climate</h5>
-            <label for="clear-radio">Clear</label>
+            <header><label className={styles.label}>Climate</label></header>
+            <label htmlFor="clear-radio">Clear</label>
             <input id="clear-radio" type="radio" name={`${id}-climate`} value="clear"
               onChange={() => { this.updateClimate('clear'); }}
             />
-            <label for="sunny-radio">Sunny</label>
+            <label htmlFor="sunny-radio">Sunny</label>
             <input id="sunny-radio" type="radio" name={`${id}-climate`} value="sunny"
               onChange={() => { this.updateClimate('sunny'); }}
             />
-            <label for="rainy-radio">Rainy</label>
+            <label htmlFor="rainy-radio">Rainy</label>
             <input id="rainy-raido" type="radio" name={`${id}-climate`} value="rainy"
               onChange={() => { this.updateClimate('rainy'); }}
             />
-            <label for="cold-radio">Cold</label>
+            <label htmlFor="cold-radio">Cold</label>
             <input id="cold-raido" type="radio" name={`${id}-climate`} value="cold"
               onChange={() => { this.updateClimate('cold'); }}
             />
@@ -249,10 +253,19 @@ export default class Configuration extends React.Component {
           <div className={`${styles.feature} odd`}>{ `${wastedTime} m` }</div>
           <div className={`${styles.feature} even`}>{ `${cost} MAD` }</div>
           <div className={`${styles.feature} odd`}>{ `${energy} kcal` }</div>
-          <div className={`${styles.feature} even`}>{ `${comfort} *` }</div>
-          <div className={`${styles.feature} odd`}>{ `${security} *` }</div>
+          <div className={`${styles.feature} even`}><Stars number={comfort} /></div>
+          <div className={`${styles.feature} odd`}><Stars number={security} /></div>
         </section>
       </section>
     )
+  }
+}
+
+class Stars extends React.Component {
+  render() {
+    const res = []
+    for (let i = 0; i < this.props.number; i++)
+      res.push(<AiFillStar />)
+    return res;
   }
 }
