@@ -24,7 +24,7 @@ export default class Configuration extends React.Component {
   }
 
   compute = (mean, departuneHome, departuneWork, climate) =>  {
-    console.log('Computing with state: ', this.state);
+    // console.log('Computing with state: ', this.state);
     let travelTime = 0;
     let cost = 0;
     let energy = 0;
@@ -164,6 +164,13 @@ export default class Configuration extends React.Component {
   componentDidMount() {
     const { mean, departuneHome, departuneWork, climate } = this.state
     this.compute(mean, departuneHome, departuneWork, climate);
+
+    const segment = document.querySelector(`#${this.props.id} ion-segment`);
+    console.log('id: ', this.props.id);
+    segment.addEventListener('ionChange', (ev) => {
+      console.log('Segment changed', ev.detail.value);
+      this.updateMean(ev.detail.value);
+    })
   }
 
   updateMean = (mean) => {
@@ -191,27 +198,27 @@ export default class Configuration extends React.Component {
   }
 
   render() {
-    const { travelTime, wastedTime, cost, energy, comfort, security } = this.state;
+    const { mean, travelTime, wastedTime, cost, energy, comfort, security } = this.state;
     const { id } = this.props;
 
     return (
-      <section className={styles.root}>
+      <section id={id} className={styles.root}>
         <section className={styles.configuration}>
           <h4>Configuration</h4>
-          <div>
-            <label htmlFor="train-radio">Train</label>
-            <input id="train-radio" type="radio" name={`${id}-mean`} value="train"
-              onChange={() => { this.updateMean('train'); }}
-            />
-            <label htmlFor="cycle-radio">Cycle</label>
-            <input id="cycle-radio" type="radio" name={`${id}-mean`} value="cycle"
-              onChange={() => { this.updateMean('cycle'); }}
-            />
-            <label htmlFor="car-radio">Car</label>
-            <input id="car-radio" type="radio" name={`${id}-mean`} value="car"
-              onChange={() => { this.updateMean('car'); } }
-            />
-          </div>
+          <ion-segment value={mean}>
+            <ion-segment-button value="train">
+              <ion-label>Train</ion-label>
+              <ion-icon name="train"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="cycle">
+              <ion-label>Cycle</ion-label>
+              <ion-icon name="bicycle"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="car">
+              <ion-label>Car</ion-label>
+              <ion-icon name="car"></ion-icon>
+            </ion-segment-button>
+          </ion-segment>
           <div className={styles.select}>
             <label className={styles.label}>Departune from home</label>
             <select className={styles['select-css']} onChange={(e) => { this.updateDepartuneHome(e.target.value) }}>
