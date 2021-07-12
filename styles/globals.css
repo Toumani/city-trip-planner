@@ -46,3 +46,7 @@ a {
 #labels > div > span {
   align-self: center;
 }
+
+ion-segment[name="climate"] ion-segment-button {
+  min-width: 50px;
+}

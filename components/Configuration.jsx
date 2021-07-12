@@ -165,12 +165,11 @@ export default class Configuration extends React.Component {
     const { mean, departuneHome, departuneWork, climate } = this.state
     this.compute(mean, departuneHome, departuneWork, climate);
 
-    const segment = document.querySelector(`#${this.props.id} ion-segment`);
-    console.log('id: ', this.props.id);
-    segment.addEventListener('ionChange', (ev) => {
-      console.log('Segment changed', ev.detail.value);
-      this.updateMean(ev.detail.value);
-    })
+    const meanSegment = document.querySelector(`#${this.props.id} ion-segment[name="mean"]`);
+    meanSegment.addEventListener('ionChange', ev => this.updateMean(ev.detail.value));
+
+    const climateSegment = document.querySelector(`#${this.props.id} ion-segment[name="climate"]`);
+    climateSegment.addEventListener('ionChange', ev => this.updateClimate(ev.detail.value));
   }
 
   updateMean = (mean) => {
@@ -198,14 +197,14 @@ export default class Configuration extends React.Component {
   }
 
   render() {
-    const { mean, travelTime, wastedTime, cost, energy, comfort, security } = this.state;
+    const { mean, climate, travelTime, wastedTime, cost, energy, comfort, security } = this.state;
     const { id } = this.props;
 
     return (
       <section id={id} className={styles.root}>
         <section className={styles.configuration}>
           <h4>Configuration</h4>
-          <ion-segment value={mean}>
+          <ion-segment value={mean} name="mean">
             <ion-segment-button value="train">
               <ion-label>Train</ion-label>
               <ion-icon name="train"></ion-icon>
@@ -235,25 +234,24 @@ export default class Configuration extends React.Component {
               <option value="after">After rush hour</option>
             </select>
           </div>
-          <div>
-            <header><label className={styles.label}>Climate</label></header>
-            <label htmlFor="clear-radio">Clear</label>
-            <input id="clear-radio" type="radio" name={`${id}-climate`} value="clear"
-              onChange={() => { this.updateClimate('clear'); }}
-            />
-            <label htmlFor="sunny-radio">Sunny</label>
-            <input id="sunny-radio" type="radio" name={`${id}-climate`} value="sunny"
-              onChange={() => { this.updateClimate('sunny'); }}
-            />
-            <label htmlFor="rainy-radio">Rainy</label>
-            <input id="rainy-raido" type="radio" name={`${id}-climate`} value="rainy"
-              onChange={() => { this.updateClimate('rainy'); }}
-            />
-            <label htmlFor="cold-radio">Cold</label>
-            <input id="cold-raido" type="radio" name={`${id}-climate`} value="cold"
-              onChange={() => { this.updateClimate('cold'); }}
-            />
-          </div>
+          <ion-segment value={climate} name="climate">
+            <ion-segment-button value="clear">
+              <ion-label>Clear</ion-label>
+              <ion-icon name="cloud"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="sunny">
+              <ion-label>Sunny</ion-label>
+              <ion-icon name="sunny"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="rainy">
+              <ion-label>Rainy</ion-label>
+              <ion-icon name="rainy"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="cold">
+              <ion-label>Cold</ion-label>
+              <ion-icon name="snow"></ion-icon>
+            </ion-segment-button>
+          </ion-segment>
         </section>
         <section className={styles.features}>
           <div className={`${styles.feature} even`}><span>{ `${travelTime} m` }</span></div>
